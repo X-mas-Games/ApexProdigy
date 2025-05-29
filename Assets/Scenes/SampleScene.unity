@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 380713763}
   - component: {fileID: 380713762}
   - component: {fileID: 380713761}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -559,8 +559,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerRigidbody: {fileID: 513235778}
-  _moveSpeed: 1
-  _frictionMove: 1
+  _isGrounded: 0
+  groundCheckDistance: 1.1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  movementConfig: {fileID: 11400000, guid: 0cbac66a116998246af4e9dbd14174c8, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
