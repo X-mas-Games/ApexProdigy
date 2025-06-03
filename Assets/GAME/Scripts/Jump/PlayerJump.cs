@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class PlayerJump : IJumpStrategy 
+public class PlayerJump : IJumpStrategy
 {
-    public void Jump(Rigidbody playerRigidbody, float jumpForce, bool isGrounded)
+    public void Jump(Rigidbody playerRigidbody, float jumpForce, bool isGrounded, bool jumpPressed)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (jumpPressed && isGrounded)
         {
-            Vector3 jump = Vector3.up * jumpForce;
-            playerRigidbody.AddForce(jump, ForceMode.Impulse);
+          
+            playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
-
-   
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IJumpStrategy 
+public interface IJumpStrategy
 {
-    void Jump(Rigidbody playerRigidbody, float jumpForce, bool isGrounded);
+    void Jump (Rigidbody playerRigidbody, float jumpForce, bool isGrounded, bool jumpPressed);
 }
