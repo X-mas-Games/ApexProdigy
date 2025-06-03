@@ -10,4 +10,6 @@ public class PlayerJump : IJumpStrategy
             playerRigidbody.AddForce(jump, ForceMode.Impulse);
         }
     }
+
+   
 }

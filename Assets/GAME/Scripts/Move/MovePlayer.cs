@@ -29,7 +29,12 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        movementStrategy.MovePlayer(_playerRigidbody, transform, movementConfig._moveSpeed);
-        movementStrategy.ApplyFriction(_playerRigidbody, movementConfig._friction);
+        movementStrategy.MovePlayer(_playerRigidbody, transform, movementConfig._moveSpeed, _isGrounded);
+    
+        if (_isGrounded)
+        {
+            movementStrategy.ApplyFriction(_playerRigidbody, movementConfig._friction);
+        }
     }
+
 }
