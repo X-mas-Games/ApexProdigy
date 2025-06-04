@@ -574,13 +574,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerRigidbody: {fileID: 513235778}
-  groundLayer:
+  _groundLayer:
     serializedVersion: 2
-    m_Bits: 8
-  moveSpeed: 2
-  friction: 0.5
-  jumpForce: 11
-  groundCheckDistance: 1
+    m_Bits: 0
+  _moveSpeed: 2
+  _friction: 0
+  _jumpForce: 0
+  _groundCheckDistance: 0
 --- !u!136 &513235782
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 1365493974}
   - component: {fileID: 1365493975}
   m_Layer: 0
-  m_Name: CameraCenter
+  m_Name: Camera Components
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
