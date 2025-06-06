@@ -3,70 +3,63 @@ using UnityEngine.Serialization;
 
 public class MovePlayer : MonoBehaviour
 {
+    
     [Header("References")]
-    [SerializeField] private Rigidbody _playerRigidbody;
+    [SerializeField] private Rigidbody _playerRigidbody; 
     [SerializeField] private LayerMask _groundLayer;
 
-    [FormerlySerializedAs("moveSpeed")]
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _friction ;
-    [SerializeField] private float _jumpForce;
-
-  
-    [Header("Ground Check")]
-    [SerializeField] private float _groundCheckDistance ;
-
-    private CapsuleCollider _capsuleCollider;
     
-    private IMovementStrategy movementStrategy;
-    private IJumpStrategy jumpStrategy;
+    [Header("Settings")]
+    [SerializeField] private float _moveSpeed = 5f; 
+    [SerializeField] private float _jumpForce = 5f; 
+    [SerializeField] private float _friction = 0.5f;
 
-    private bool _isGrounded;
-    private bool _jumpPressed;
+    private IJumpStrategy jumpStrategy;
+    private IMovementStrategy movementStrategy;
+    private CapsuleCollider capsuleCollider;
+    private PlayerController _controller;
 
     private void Awake()
     {
-         movementStrategy = new HorizontalMovement();
-         jumpStrategy = new PlayerJump();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
+        jumpStrategy = new PlayerJump();
+        movementStrategy = new HorizontalMovement();
+
+        _controller = new PlayerController
+        {
+            Rigidbody = _playerRigidbody,
+            Transform = transform,
+            Collider = capsuleCollider,
+            MoveSpeed = _moveSpeed,
+            JumpForce = _jumpForce,
+            Friction = _friction
+        };
     }
 
     private void Update()
     {
-        _jumpPressed = Input.GetButtonDown("Jump");
-        _isGrounded = CheckGrounded();
+        _controller.JumpPressed = Input.GetButtonDown("Jump");
+        _controller.IsGrounded = CheckGrounded();
 
-        jumpStrategy.Jump(_playerRigidbody, _jumpForce, _isGrounded, _jumpPressed);
+        jumpStrategy.JumpPlayer(_controller);
+        jumpStrategy.CrouchPlayer(_controller);
     }
 
     private void FixedUpdate()
     {
-        movementStrategy.MovePlayer(_playerRigidbody, transform, _moveSpeed, _isGrounded);
-
-        if (_isGrounded)
-        {
-            movementStrategy.ApplyFriction(_playerRigidbody, _friction);
-        }
+        movementStrategy.Move(_controller);
     }
 
     private bool CheckGrounded()
     {
-        if (_capsuleCollider == null) return false;
+        if (capsuleCollider == null) return false;
 
-        // Верхняя и нижняя точки капсулы (с учётом радиуса)
-        float halfHeight = _capsuleCollider.height / 2f;
-        float radius = _capsuleCollider.radius * 0.9f; // чтобы избежать ложных срабатываний
-
-        // Точка сверху — чуть ниже верхней части капсулы
+        float halfHeight = capsuleCollider.height / 2f;
+        float radius = capsuleCollider.radius * 0.9f;
         Vector3 point1 = transform.position + Vector3.up * (halfHeight - radius);
-    
-        // Точка снизу — чуть ниже нижней части капсулы (добавим 0.05 проверим что касается земли)
         Vector3 point2 = transform.position + Vector3.down * (halfHeight - radius + 0.05f);
 
-        // Проверка, пересекается ли визуал нашей капсулы с каким-либо коллайдером земли 
         return Physics.CheckCapsule(point1, point2, radius, _groundLayer, QueryTriggerInteraction.Ignore);
     }
-    
-    }
-
-
+}

@@ -1,6 +1,9 @@
-using UnityEngine;
+
 
 public interface IJumpStrategy
 {
-    void Jump (Rigidbody playerRigidbody, float jumpForce, bool isGrounded, bool jumpPressed);
+   public void JumpPlayer   (PlayerController controller);
+   public void CrouchPlayer (PlayerController controller);
 }
+
+

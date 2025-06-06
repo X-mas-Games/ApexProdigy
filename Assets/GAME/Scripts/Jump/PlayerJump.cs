@@ -2,12 +2,21 @@ using UnityEngine;
 
 public class PlayerJump : IJumpStrategy
 {
-    public void Jump(Rigidbody playerRigidbody, float jumpForce, bool isGrounded, bool jumpPressed)
+    public void JumpPlayer (PlayerController controller)
     {
-        if (jumpPressed && isGrounded)
+        if (controller.JumpPressed && controller.IsGrounded)
         {
-          
-            playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            controller.Rigidbody.AddForce(Vector3.up * controller.JumpForce, ForceMode.Impulse);
         }
+    }
+    
+    
+
+    public void CrouchPlayer (PlayerController controller)
+    {
+        bool crouching = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.S) || !controller.IsGrounded;
+
+        Vector3 targetScale = crouching ? new Vector3(1, 0.5f, 1) : new Vector3(1, 1, 1);
+        controller.Transform.localScale = Vector3.Lerp(controller.Transform.localScale, targetScale, Time.deltaTime * 15);
     }
 }
