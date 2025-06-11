@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class PlayerCrouchRealization : IJumpStrategy, ICrouchStrategy
 {
-    public void JumpPlayer(PlayerController controller)
+    public void JumpPlayer(PlayerData data)
     {
-        if (controller.jumpPressed && controller.isGrounded)
+        if (data.jumpPressed && data.isGrounded)
         {
-            controller.rb.AddForce(Vector3.up * controller.jumpForce, ForceMode.Impulse);
+            data.playerRigidbody.AddForce(Vector3.up * data.jumpForce, ForceMode.Impulse);
         }
     }
 
-    public void CrouchPlayer(PlayerController controller, bool isCrouching)
+    public void CrouchPlayer(PlayerData data, bool isCrouching)
     {
-        Vector3 targetScale = isCrouching || !controller.isGrounded
+        Vector3 targetScale = isCrouching || !data.isGrounded
             ? new Vector3(1, 0.5f, 1)
             : new Vector3(1, 1, 1);
 
-        controller.transform.localScale = Vector3.Lerp(controller.transform.localScale, targetScale, Time.deltaTime * 15f);
+        data.playerTransform.localScale = Vector3.Lerp(data.playerTransform.localScale, targetScale, Time.deltaTime * 15f);
     }
 }

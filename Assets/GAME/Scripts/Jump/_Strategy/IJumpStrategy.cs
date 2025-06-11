@@ -1,4 +1,4 @@
 public interface IJumpStrategy
 {
-    void JumpPlayer(PlayerController controller);
+    void JumpPlayer(PlayerData data);
 }

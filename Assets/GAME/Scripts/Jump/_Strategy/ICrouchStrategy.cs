@@ -1,5 +1,5 @@
 
 public interface ICrouchStrategy
 {
-    void CrouchPlayer (PlayerController controller, bool isCrouching);
+    void CrouchPlayer (PlayerData data, bool isCrouching);
 }

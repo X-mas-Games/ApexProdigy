@@ -532,7 +532,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 0, y: 0, z: 0}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -596,12 +596,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa09afce2ce208e4f80fa2abe1181d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller:
+  data:
     isGrounded: 0
     jumpPressed: 0
-    rb: {fileID: 513235778}
-    transform: {fileID: 513235777}
-    capsule: {fileID: 513235782}
+    airControlPlayer: 0.5
+    playerRigidbody: {fileID: 513235778}
+    playerTransform: {fileID: 513235777}
+    playerCollider: {fileID: 513235782}
+    moveSpeed: 22
     jumpForce: 22
     groundLayer:
       serializedVersion: 2
